@@ -36,3 +36,5 @@ You can download the APK from the **Artifacts** section on GitHub Actions.
 ---
 
 ## 📂 Project Structure
+
+Update for building APK
