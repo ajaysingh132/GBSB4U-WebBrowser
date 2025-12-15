@@ -1,10 +1,12 @@
+// Top-level build file
+
 buildscript {
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        classpath 'classpath 'com.android.tools.build:gradle:7.4.2'
+        classpath "com.android.tools.build:gradle:7.4.2"
     }
 }
 
