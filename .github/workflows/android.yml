@@ -1,4 +1,38 @@
-- name: Build Debug APK (No Wrapper)
-  run: |
-    gradle --version
-    gradle assembleDebug
+name: Android CI
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      # 🔥 THIS IS THE MISSING STEP
+      - name: Install Gradle (No Wrapper)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gradle
+          gradle --version
+
+      - name: Build Debug APK (No Wrapper)
+        run: gradle assembleDebug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: debug-apk
+          path: app/build/outputs/apk/debug/*.apk
