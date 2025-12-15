@@ -3,12 +3,13 @@
     package="com.gbsb4u.webbrowser">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
-        android:label="GBSB4U Browser"
-        android:icon="@mipmap/ic_launcher">
+        android:label="GBSB4U WebBrowser"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true">
 
         <activity
             android:name=".MainActivity"
