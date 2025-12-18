@@ -1,0 +1,18 @@
+package com.example.webviewapp; // आपके ऐप का पैकेज नाम 
+ 
+import android.os.Bundle; 
+import android.webkit.WebView; 
+import androidx.appcompat.app.AppCompatActivity; 
+ 
+public class MainActivity extends AppCompatActivity { 
+    @Override 
+    protected void onCreate(Bundle savedInstanceState) { 
+        super.onCreate(savedInstanceState); 
+        setContentView(R.layout.activity_main); 
+         
+        WebView webView = findViewById(R.id.webview); 
+        webView.getSettings().setJavaScriptEnabled(true); // JavaScript को सक्षम करें 
+        webView.loadUrl("https://www.example.com"); // अपनी वेबसाइट का URL बदलें 
+    } 
+} 
+
