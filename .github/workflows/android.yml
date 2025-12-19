@@ -1,47 +1,57 @@
-# my-webview-app/.github/workflows/android.yml 
-name: ✅ Android APK Build (Fixed) 
+name: ✅ GBSB4U WebBrowser APK Build (Final Fix) 
 on: 
   push: 
-    branches: [ main ] # जब main branch पर push हो 
+    branches: [ main, master ] 
   pull_request: 
-    branches: [ main ] # जब main branch पर pull request हो 
-  workflow_dispatch: # मैन्युअल रूप से भी चला सकते हैं (GitHub UI से) 
- 
+    branches: [ main, master ] 
+  workflow_dispatch: 
+     
 jobs: 
   build: 
-    runs-on: ubuntu-latest # GitHub द्वारा प्रदान किया गया वर्चुअल Linux एनवायरनमेंट 
+    runs-on: ubuntu-latest 
          
     steps: 
-    - name: 📥 Checkout Code 
-      uses: actions/checkout@v4 # GitHub रिपॉजिटरी से कोड चेकआउट करें 
+    - name: 📥 Checkout GBSB4U-WebBrowser Code 
+      uses: actions/checkout@v4 
            
     - name: ☕ Java 17 Setup 
-      uses: actions/setup-java@v4 # Java 17 इंस्टॉल करें 
+      uses: actions/setup-java@v4 
       with: 
         java-version: '17' 
-        distribution: 'temurin' # Java का वितरण (ओपनसोर्स) 
+        distribution: 'temurin' 
              
     - name: 🗄️ Gradle Wrapper Setup 
       run: | 
-        chmod +x gradlew # repo में मौजूद gradlew स्क्रिप्ट को एक्जीक्यूटेबल बनाएं 
-        # यह कमांड gradlew स्क्रिप्ट और jar को जनरेट या वेरीफाई करता है 
+        # रेपो में मौजूद gradlew स्क्रिप्ट को एक्जीक्यूटेबल बनाएं 
+        chmod +x gradlew 
+        # यह कमांड Gradle Wrapper JAR को जनरेट या वेरीफाई करता है 
+        # और सुनिश्चित करता है कि सही Gradle version (8.6) उपयोग हो रहा है। 
         ./gradlew wrapper --gradle-version 8.6 --distribution-type bin 
              
     - name: 📱 Android SDK Setup 
-      uses: android-actions/setup-android@v3 # Android SDK एनवायरनमेंट सेट करें 
+      uses: android-actions/setup-android@v3 
            
-    - name: ✅ Accept SDK Licenses 
-      run: yes | sdkmanager --licenses # Android SDK लाइसेंस स्वीकार करें 
+    - name: ✅ Accept Licenses 
+      run: yes | sdkmanager --licenses 
            
-    - name: 🔧 Install SDK 34 
-      run: sdkmanager "platforms;android-34" "build-tools;34.0.0" # विशिष्ट SDK 34 और बिल्ड टूल्स इंस्टॉल करें 
-           
+    - name: 🔧 Install SDK (GBSB4U Compatible) 
+      run: | 
+        sdkmanager "platforms;android-34" "build-tools;34.0.0" 
+        sdkmanager "platforms;android-33" # आपके repo के अनुसार 
+         
     - name: 🚀 Build Debug APK 
-      run: ./gradlew assembleDebug --stacktrace # Gradle कमांड चलाकर debug APK बनाएं 
+      run: ./gradlew assembleDebug --stacktrace 
            
-    - name: 📤 Upload APK 
-      uses: actions/upload-artifact@v4 # बनाए गए APK को एक GitHub Artifact के रूप में अपलोड करें 
+    - name: 🏗️ Build Release APK 
+      run: ./gradlew assembleRelease --stacktrace 
+           
+    - name: 📤 Upload GBSB4U APKs 
+      uses: actions/upload-artifact@v4 
       with: 
-        name: app-debug.apk # Artifact का नाम 
-        path: app/build/outputs/apk/debug/app-debug.apk # APK का पाथ 
+        name: GBSB4U-WebBrowser-APKs 
+        path: | 
+          app/build/outputs/apk/debug/app-debug.apk 
+          app/build/outputs/apk/release/app-release.apk 
+        retention-days: 30 
 
+      
