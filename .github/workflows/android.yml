@@ -1,57 +1,15 @@
-name: ✅ GBSB4U WebBrowser - BULLETPROOF APK Build 
-on: 
-  push: 
-    branches: [ main, master ] 
-  pull_request: 
-    branches: [ main, master ] 
-  workflow_dispatch: 
-     
+name: 🚀 GBSB4U WebBrowser APK Build (Gradle Updated) 
+on: [push, workflow_dispatch] 
+ 
 jobs: 
   build: 
     runs-on: ubuntu-latest 
-         
+     
     steps: 
-    - name: 📥 Checkout GBSB4U-WebBrowser Code 
-      uses: actions/checkout@v4 
-           
-    - name: ☕ Java 17 Setup 
-      uses: actions/setup-java@v4 
-      with: 
-        java-version: '17' 
-        distribution: 'temurin' 
-             
-    - name: 🗄️ Gradle Wrapper Setup 
-      run: | 
-        # रेपो में मौजूद gradlew स्क्रिप्ट को एक्जीक्यूटेबल बनाएं 
-        chmod +x gradlew 
-        # यह कमांड Gradle Wrapper JAR को जनरेट या वेरीफाई करता है 
-        # और सुनिश्चित करता है कि सही Gradle version (8.6) उपयोग हो रहा है। 
-        ./gradlew wrapper --gradle-version 8.6 --distribution-type bin 
-             
-    - name: 📱 Android SDK Setup 
-      uses: android-actions/setup-android@v3 
-           
-    - name: ✅ Accept Licenses 
-      run: yes | sdkmanager --licenses 
-           
-    - name: 🔧 Install SDK (GBSB4U Compatible) 
-      run: | 
-        sdkmanager "platforms;android-34" "build-tools;34.0.0" 
-        sdkmanager "platforms;android-33" # आपके repo के अनुसार 
-         
-    - name: 🚀 Build Debug APK 
-      run: ./gradlew assembleDebug --stacktrace 
-           
-    - name: 🏗️ Build Release APK 
-      run: ./gradlew assembleRelease --stacktrace 
-           
-    - name: 📤 Upload GBSB4U APKs 
-      uses: actions/upload-artifact@v4 
-      with: 
-        name: GBSB4U-WebBrowser-APKs 
-        path: | 
-          app/build/outputs/apk/debug/app-debug.apk 
-          app/build/outputs/apk/release/app-release.apk 
-        retention-days: 30 
+    # ✅ OFFICIAL GRADLE ACTION (Web Search #1) 
+    - uses: gradle/gradle-build-action@v3 
+     
+    # ✅ JAVA 17 EXPLICIT (Web Search #2) 
+    - uses
 
 
